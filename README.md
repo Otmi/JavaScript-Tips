@@ -1,12 +1,12 @@
 # JavaScript-Tips
-偶然看到有很多人都有自己的一个javascript tips项目，这个项目是每天分享一个JavaScript Tip，受到这个项目的启发，我也打算每天更新一个小Tip，其中会有一些难以区分或不熟悉的概念、常用的算法、技巧等内容，希望借此也可以来巩固自己的javascript。
+偶然看到有很多人都有自己的一个javascript tips项目，这个项目是每天分享一个JavaScript Tip，受到这个项目的启发，我也打算每天更新一个小Tip，其中会有一些难以区分或不熟悉的概念、常用的算法、技巧等内容，带着自己的思考和体会也有从其他人那学习的经验。希望借此也可以来巩固自己的javascript。
 
 ### 目录
 ##### 2016-03-08 至 2016-03-31
 
 * [2016-03-08-数组去重算法](#1.1)
 * [2016-03-09-如何打乱数组顺序](#1.2)
-* [2016-03-09-待定](#1.3)
+* [2016-03-09-检测数据类型](#1.3)
 
 <h5 id='1.1'>数组去重算法</h5>
 数组去重相信应该遇到的情况会有很多，这里提供几种方法。
@@ -117,6 +117,29 @@ function shuffle_2(array){
         array[m]=array[i];
         array[i]=t;
     }
-    return array;
+    return arraidy;
 }
 ```
+---
+<h5 id='1.3'>检测数组类型</h5>
+我们通常会使用typeof、instanceof、isArray来检测数据的类型，这里我介绍一种万能型的：调用Object的toString方法。
+
+```javascript
+function a(){console.log("yes");}
+console.log(Object.prototype.toString.call(a)); // [object Function]
+var b = 123;
+console.log(Object.prototype.toString.call(b)); // [object Number]
+var c = "heke";
+console.log(Object.prototype.toString.call(c)); // [object String]
+var d = true;
+console.log(Object.prototype.toString.call(d)); // [object Boolean]
+var e = [1,2,3];
+console.log(Object.prototype.toString.call(e)); // [object Array]
+var f;
+console.log(Object.prototype.toString.call(f)); // [object Undefined]
+var g = null;
+console.log(Object.prototype.toString.call(g)); // [object Null]
+var h = {"name":"heke"};
+console.log(Object.prototype.toString.call(h)); // [object Object]
+```
+使用`call`调用`Object`的`toString`方法，将会返回一个遵循[object NativeConstructorName]格式的字符串。其中`NativeConstructorName`指的就是变量的构造函数名
