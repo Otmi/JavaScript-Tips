@@ -1,12 +1,13 @@
 # JavaScript-Tips
-偶然看到有很多人都有自己的一个javascript tips项目，这个项目是每天分享一个JavaScript Tip，受到这个项目的启发，我也打算每天更新一个小Tip，其中会有一些难以区分或不熟悉的概念、常用的算法、技巧等内容，带着自己的思考和体会也有从其他人那学习的经验。希望借此也可以来巩固自己的javascript。
+偶然看到有很多人都有自己的一个javascript tips项目，这个项目是每天分享一个JavaScript Tip，受到这个项目的启发，我也打算每天更新一个小Tip，其中会有一些难以区分或不熟悉的概念、常用的算法、技巧等内容，带着自己的思考和体会也有从其他人那学习的经验,比如[这里](https://github.com/loverajoel/jstips)。希望借此也可以来巩固自己的javascript。
 
 ### 目录
 ##### 2016-03-08 至 2016-03-31
 
 * [2016-03-08-数组去重算法](#1.1)
 * [2016-03-09-如何打乱数组顺序](#1.2)
-* [2016-03-09-检测数据类型](#1.3)
+* [2016-03-10-检测数据类型](#1.3)
+* [2016-03-10-判断对象中是否存在某个属性](#1.4) 
 
 <h5 id='1.1'>数组去重算法</h5>
 数组去重相信应该遇到的情况会有很多，这里提供几种方法。
@@ -72,6 +73,7 @@ function unique_3(arr){
 有时候我们通常会遇到要打乱一个数组内容顺序的情况，这里提供三种方法来打乱数组。
 
 每次随机抽一个数并移动到新数组中，然后用逻辑判断。
+
 ```javascript
 function shuffle(array){
     var copy=[],
@@ -91,6 +93,7 @@ function shuffle(array){
 }
 ```
 跟方法1类似，只不过通过splice来去掉原数组已选项
+
 ```javascript
 function shuffle_1(array) {
     var copy = [],
@@ -107,6 +110,7 @@ function shuffle_1(array) {
 }
 ```
 前面随机抽数依次跟末尾的数交换，后面依次前移，即：第一次前n个数随机抽一个跟第n个交换，第二次前n-1个数跟第n-1个交换，依次类推。
+
 ```javascript
 function shuffle_2(array){
     var m=array.length,
@@ -143,3 +147,31 @@ var h = {"name":"heke"};
 console.log(Object.prototype.toString.call(h)); // [object Object]
 ```
 使用`call`调用`Object`的`toString`方法，将会返回一个遵循[object NativeConstructorName]格式的字符串。其中`NativeConstructorName`指的就是变量的构造函数名
+
+---
+
+<h5 id='1.4'>判断对象中是否存在某个属性</h5>
+我们经常需要用到对象中的某个属性，为了保证程序的健壮性，在使用之前我们需要判断这个属性是否存在，可以用if来判断
+
+```javascript
+if(obj[property] !== undefined){
+// do something
+}
+```
+
+除此之外，我们还可以使用两种原生的方法，因为每一个object都继承自Object，所以都拥有 in operator 和 Object.hasOwnProperty方法
+
+```javascript
+function Person (name) {
+    this.name  = name;
+}
+Person.prototype.age = '22';
+
+var person = new Person("heke");
+console.log(person.hasOwnProperty('name'));    // true
+console.log("name" in person);                // true
+
+console.log(person.hasOwnProperty('age'));    // false
+console.log("age" in person);                 // true
+```
+`hasOwnProperty`和`in`都可以用来判断某个属性是否存在于对象中，区别就是`hasOwnProperty`不能搜索到从原型链继承的属性，而`in`可以。
