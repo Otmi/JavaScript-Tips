@@ -7,7 +7,8 @@
 * [2016-03-08-数组去重算法](#1.1)
 * [2016-03-09-如何打乱数组顺序](#1.2)
 * [2016-03-10-检测数据类型](#1.3)
-* [2016-03-10-判断对象中是否存在某个属性](#1.4) 
+* [2016-03-11-判断对象中是否存在某个属性](#1.4)
+* [2016-03-14-变量和函数的提前声明](#1.5)
 
 <h5 id='1.1'>数组去重算法</h5>
 数组去重相信应该遇到的情况会有很多，这里提供几种方法。
@@ -67,9 +68,9 @@ function unique_3(arr){
 	return arr;
 }
 ```
----
+--
 
-<h5 id='1.2'>打乱数组顺序</h5>
+ <h5 id='1.2'>打乱数组顺序</h5>
 有时候我们通常会遇到要打乱一个数组内容顺序的情况，这里提供三种方法来打乱数组。
 
 每次随机抽一个数并移动到新数组中，然后用逻辑判断。
@@ -124,8 +125,8 @@ function shuffle_2(array){
     return arraidy;
 }
 ```
----
-<h5 id='1.3'>检测数组类型</h5>
+--
+ <h5 id='1.3'>检测数组类型</h5>
 我们通常会使用typeof、instanceof、isArray来检测数据的类型，这里我介绍一种万能型的：调用Object的toString方法。
 
 ```javascript
@@ -148,9 +149,9 @@ console.log(Object.prototype.toString.call(h)); // [object Object]
 ```
 使用`call`调用`Object`的`toString`方法，将会返回一个遵循[object NativeConstructorName]格式的字符串。其中`NativeConstructorName`指的就是变量的构造函数名
 
----
+--
 
-<h5 id='1.4'>判断对象中是否存在某个属性</h5>
+ <h5 id='1.4'>判断对象中是否存在某个属性</h5>
 我们经常需要用到对象中的某个属性，为了保证程序的健壮性，在使用之前我们需要判断这个属性是否存在，可以用if来判断
 
 ```javascript
@@ -175,3 +176,43 @@ console.log(person.hasOwnProperty('age'));    // false
 console.log("age" in person);                 // true
 ```
 `hasOwnProperty`和`in`都可以用来判断某个属性是否存在于对象中，区别就是`hasOwnProperty`不能搜索到从原型链继承的属性，而`in`可以。
+
+
+--
+
+ <h5 id='1.5'>变量和函数的提前声明</h5>
+
+在JavaScript里 变量声明 是让系统知道这个变量存在，在ES5中变量定义是给这个变量赋值。变量声明会被提前到顶部，而变量定义不会。
+
+```javascript
+console.log(a);   // "ReferenceError: a is not defined"
+```
+上面的代码报变量没有定义的错误。
+
+```javascript
+console.log(a); // undefined
+var a = 3;
+```
+上面的代码提示undefined，不过我们在这里对a同时做了声明和定义两个操作，从结果来看，只有声明被提前了，而定义却没有。
+
+在ES6中，我们多了let和const两个来定义变量的命令，不过它们不像var那样会发生“变量提升”现象。所以，使用它们定义变量，变量一定要在声明后使用，否则报错。
+
+接下来看函数：
+
+```javascript
+getName();                  // "heke"
+function getName(){
+    console.log("heke");
+}
+```
+结果说明我们对函数的声明被提前了。
+
+```javascript
+getName();       // "TypeError: getName is not a function"
+var getName=function(){
+    console.log("heke");
+}
+```
+事实上，第一种方式叫函数声明，这种方式能被提前到顶部，第二种方式叫函数表达式，不会被提前。
+
+
