@@ -9,6 +9,7 @@
 * [2016-03-10-检测数据类型](#1.3)
 * [2016-03-11-判断对象中是否存在某个属性](#1.4)
 * [2016-03-14-变量和函数的提前声明](#1.5)
+* [2016-03-15-null和undefined的区别](#1.6)
 
 <h5 id='1.1'>数组去重算法</h5>
 数组去重相信应该遇到的情况会有很多，这里提供几种方法。
@@ -215,4 +216,17 @@ var getName=function(){
 ```
 事实上，第一种方式叫函数声明，这种方式能被提前到顶部，第二种方式叫函数表达式，不会被提前。
 
+--
+
+ <h5 id='1.6'>null和undefined的区别</h5>
+ 
++ undefined表示变量没有被声明或者声明了但是没有被赋值。
++ null表示这个变量不是一个值。
++ type of undefined的值为undefined
++ type of null的值为object
++ null和undefined的布尔值都为false
++ null == undefined的值为true
++ null === undefined的值为false
++ 在JSON里undefined不可用，而null是可用的
++ JavaScript里不会把一个值设置为null，只有程序员自己才能把一个值设置为null
 
