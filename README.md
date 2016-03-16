@@ -10,6 +10,7 @@
 * [2016-03-11-判断对象中是否存在某个属性](#1.4)
 * [2016-03-14-变量和函数的提前声明](#1.5)
 * [2016-03-15-null和undefined的区别](#1.6)
+* [2016-03-15-构造函数中，new这个关键字到底做了什么](#1.7)
 
 <h5 id='1.1'>数组去重算法</h5>
 数组去重相信应该遇到的情况会有很多，这里提供几种方法。
@@ -230,3 +231,20 @@ var getName=function(){
 + 在JSON里undefined不可用，而null是可用的
 + JavaScript里不会把一个值设置为null，只有程序员自己才能把一个值设置为null
 
+--
+
+ <h5 id='1.7'>构造函数中，new这个关键字到底做了什么</h5>
+ 
+ ```javascript
+ function Person(name,age){
+    this.name = name;
+    this.age = age;
+}
+var person1 = new Person("heke", "21");
+ ```
+我们以上面的代码为例说明new这个关键字做了哪些事。(来源于《javascript高级程序设计》)
+
+1. 创建一个新对象person1
+2. 将构造函数Person的作用域赋给person1,这样对象person1就可以访问构造函数Person里的代码。this就指向对象person1。
+3. 执行构造函数里的代码，对象person的name和age分别被赋值为heke、21。
+4. 返回新对象，这样我们就得到了对象person。
