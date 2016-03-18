@@ -12,6 +12,7 @@
 * [2016-03-15-null和undefined的区别](#1.6)
 * [2016-03-16-构造函数中，new这个关键字到底做了什么](#1.7)
 * [2016-03-17-经常聊到的AMD和CMD规范是什么？](#1.8)
+* [2016-03-18-使用原型链+构造函数的方式实现继承](#1.9)
 
 <h5 id='1.1'>数组去重算法</h5>
 数组去重相信应该遇到的情况会有很多，这里提供几种方法。
@@ -261,4 +262,39 @@ var person1 = new Person("heke", "21");
  1. 对于依赖的模块，AMD是提前执行，CMD是延迟执行。不过RequireJS从2.0开始，也改成了延迟执行（根据写法不同，处理方式不同）。
  2. CMD推崇依赖就近，AMD推崇依赖前置。
  3. AMD的API是一个当多个用（require分局部和全局），而CMD的API严格区分，推崇职责单一。
- 4. AMD速度快但浪费资源，CMD则性能表现差一些。 
+ 4. AMD速度快但浪费资源，CMD则性能表现差一些。
+ 
+--
+ 
+ <h5 id='1.9'>使用原型链+构造函数的方式实现继承</h5> 
+ 组合继承，有时候也叫伪经典继承，指的是将原型链和借用构造函数的技术组合到一块，从而发挥二者之长的一种继承模式。其背后的思路是使用原型链实现对原型属性和方法的继承，而通过借用构造函数来实现对实例属性的继承。这样，既通过在原型上定义方法实现了函数复用，又能够保证每个实例都有它自己的属性。
+ 
+ 下面来看一个例子：
+ 
+ ```javascript
+ function Person(name){
+ 	this.name=name;
+ }
+ Person.prototype.sayName=function(){
+ 	console.log(this.name);
+ }
+ function Man(name,age){
+ 	//继承属性
+ 	Person.call(this,name);
+ 	this.age=age;
+ }
+ //继承方法
+ Man.prototype=new Person();
+ Man.prototype.constructor=Person;
+ Man.prototype.sayAge=function(){
+ 	console.log(this.age);
+ }
+ 
+ var heke=new Man("heke",21);
+ var heke1=new Man("heke1",21);
+ heke.sayName();//"heke"
+ heke1.sayName();//"heke1"
+ 
+ ```
+ 在这个例子中，Man实现了对Person的继承，俩个不同的实例分别拥有自己的属性又可以使用共同的方法。
+ 
