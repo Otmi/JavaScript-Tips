@@ -14,6 +14,7 @@
 * [2016-03-17-经常聊到的AMD和CMD规范是什么？](#1.8)
 * [2016-03-18-使用原型链+构造函数的方式实现继承](#1.9)
 * [2016-03-21-嵌套函数的作用域](#1.10)
+* [2016-03-22-跨浏览器的事件处理程序](#1.11)
 
 <h5 id='1.1'>数组去重算法</h5>
 数组去重相信应该遇到的情况会有很多，这里提供几种方法。
@@ -333,4 +334,58 @@ var person1 = new Person("heke", "21");
  
  在第二段代码中，g在全局环境中定义，所以作用域链为g的调用对象，全局对象，所以在g中找不到时，就会去找全局对象，global。
  
+--
+
+ <h5 id='1.11'>跨浏览器的事件处理程序</h5>
+ 
+ 为了以跨浏览器的方式处理事件，不少开发人员会使用能够隔离浏览器差异的JS库， 虽然DOM和IE中得event对象不同，但基于它们之间的相似性依旧可以拿出跨浏览器的方案来。
+ 
+ ```javascript
+ var EventUtil={
+	addHandler:function(element,type,handler){
+		if(element.addEventListener){
+			element.addEventListener(type,handler,false);
+		}
+		else if(element.attachEvent){
+			element.attachEvent("on"+type,handler);
+		}
+		else{
+			element["on"+type]=handler;
+		}
+	},
+	getEvent:function(event){
+		return event ? event:window.event;
+	}，
+	getTarget：function(event){
+		return event.target||event.srcElement;
+	},
+	preventDefault:function(event){
+		if(event.preventDefault){
+			event.preventDefault();
+		}
+		else{
+			event.returnValue=false;
+		}
+	},
+	stopPropggation:function(event){
+		if(event.stopPropggation){
+			event.stopPropggation();
+		}
+		else{
+			event.cancelBubble=true;
+		}
+	},
+	removeHandler:function(element,type,handler){
+		if(element.removeEventListener){
+			element.removeEventListener(type,handler,false);
+		}
+		else if(element.detachEvent){
+			element.detachEvent("on"+type,handler);
+		}
+		else{
+			element["on"+type]=null;
+		}
+	}
+}
+ ```
  
