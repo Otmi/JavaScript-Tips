@@ -17,6 +17,7 @@
 * [2016-03-22-跨浏览器的事件处理程序](#1.11)
 * [2016-03-23-计算数组中的最大最小值](#1.12)
 * [2016-03-24-使用 === 替代 == ](#1.13)
+* [2016-03-25-如何判断某变量是否为数组数据类型？](#1.14)
 
 <h5 id='1.1'>数组去重算法</h5>
 数组去重相信应该遇到的情况会有很多，这里提供几种方法。
@@ -431,4 +432,20 @@ var person1 = new Person("heke", "21");
 
   ''  ==  false   // is true but true == "a" is false
   ''  === false   // is false
+ ```
+
+--
+
+ <h5 id='1.14'>如何判断某变量是否为数组数据类型？</h5> 
+ 
+ * 判断其是否具有“数组性质”，如slice()方法。可自己给该变量定义slice方法，故有时会失效
+ * obj instanceof Array 在某些IE版本中不正确
+ * 方法一二皆有漏洞，在ECMA Script5中定义了新方法Array.isArray(), 保证其兼容性，最好的方法如下：
+
+ ```javascript
+if(typeof Array.isArray==="undefined"){
+Array.isArray=function(arg){
+return Object.prototype.toString.call(arg)==="[object Array]"
+}
+}
  ```
