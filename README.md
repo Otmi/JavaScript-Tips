@@ -1,6 +1,8 @@
 # JavaScript-Tips
 偶然看到有很多人都有自己的一个javascript tips项目，这个项目是每天分享一个JavaScript Tip，受到这个项目的启发，我也打算每天更新一个小Tip，其中会有一些难以区分或不熟悉的概念、常用的算法、技巧等内容，带着自己的思考和体会也有从其他人那学习的经验,比如[这里](https://github.com/loverajoel/jstips)。希望借此也可以来巩固自己的javascript。
 
+2016-03-27一个人更新这个也蛮累得，可能会改为三天一个tips
+
 ### 目录
 ##### 2016-03-08 至 2016-03-31
 
@@ -450,10 +452,11 @@ return Object.prototype.toString.call(arg)==="[object Array]"
 }
 }
  ```
+
  
 --
 
- <h5id='1.15>用readyState原生JS实现跨浏览器检测文档是否加载</h5> 
+ <h5 id='1.15'>用readyState原生JS实现跨浏览器检测文档是否加载</h5> 
  
 可以使用原生Js的readyState来判断文档是否加载
 
@@ -474,3 +477,4 @@ let stateCheck = setInterval(() => {
 }, 100);
 ```
 document.readyState === 'interactive' 也能检测文档是否准备好加载
+
