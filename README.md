@@ -18,6 +18,7 @@
 * [2016-03-23-计算数组中的最大最小值](#1.12)
 * [2016-03-24-使用 === 替代 == ](#1.13)
 * [2016-03-25-如何判断某变量是否为数组数据类型？](#1.14)
+* [2016-03-28-用readyState原生JS实现跨浏览器检测文档是否加载](#1.15)
 
 <h5 id='1.1'>数组去重算法</h5>
 数组去重相信应该遇到的情况会有很多，这里提供几种方法。
@@ -449,3 +450,27 @@ return Object.prototype.toString.call(arg)==="[object Array]"
 }
 }
  ```
+ 
+--
+
+ <h5id='1.15>用readyState原生JS实现跨浏览器检测文档是否加载</h5> 
+ 
+可以使用原生Js的readyState来判断文档是否加载
+
+```javascript
+if (document.readyState === 'complete') {
+  // The page is fully loaded
+}
+```
+
+也能检测文档是否已经准备好加载
+
+```javascript
+let stateCheck = setInterval(() => {
+  if (document.readyState === 'complete') {
+    clearInterval(stateCheck);
+    // document ready
+  }
+}, 100);
+```
+document.readyState === 'interactive' 也能检测文档是否准备好加载
